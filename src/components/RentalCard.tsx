@@ -65,7 +65,7 @@ export default function RentalCard({ id, images, title, description, price, type
         <div className="mt-4 flex items-center justify-between">
           <span className="text-red-600 font-semibold">{price}</span>
           <button
-            onClick={() => window.open('https://wa.me/254759001048', '_blank')}
+            onClick={() => window.open('https://wa.me/254720813111', '_blank')}
             className="flex items-center gap-2 px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition-colors"
           >
             <Calendar className="w-4 h-4" />
