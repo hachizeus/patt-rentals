@@ -51,19 +51,14 @@ export default function App() {
       {showSignInModal && (
         <div className="absolute top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 flex justify-center items-start z-50">
           <div 
-            className="bg-white p-6 rounded-lg mt-16 shadow-lg"
-            style={{ width: '7cm', height: '5cm' }}
+            className="bg-black text-white p-4 rounded-lg mt-16" // Black background, white text
+            style={{ width: '7cm', height: '5cm' }} 
           >
             <h2 className="text-xl text-center mb-4">Sign In to Continue</h2>
-
             <button 
               onClick={signInWithGoogle} 
-              className="w-full py-2 flex justify-center items-center bg-blue-600 text-white rounded-lg"
+              className="w-full py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
             >
-              {/* Google "G" icon */}
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className="mr-3">
-                <path fill="#fff" d="M12 2.7c2.5 0 4.6.8 6.2 2.2l4.6-4.6c-2.8-2.5-6.6-4-10.8-4-7.4 0-13.5 4.1-16.3 9.8l4.8 3.6c1.7-3.3 5.2-5.6 9.3-5.6zm0 3.6c-3.1 0-5.8 1.6-7.2 3.9l-5.1-3.9c2.3-3.5 6.2-5.9 10.2-5.9 2.7 0 5.3.8 7.6 2.3l-4.8 4c-1.4-.9-3.1-1.4-5-1.4zm-7.2 3.9c-1.7 0-3.1 1.4-3.1 3.1 0 1.7 1.4 3.1 3.1 3.1s3.1-1.4 3.1-3.1c0-1.7-1.4-3.1-3.1-3.1zm7.2 3.9c2.2 0 4.1.7 5.7 1.9l4.4-3.7c-2.5-2.1-5.7-3.3-9.1-3.3-7.4 0-13.5 4.1-16.3 9.8l4.8 3.6c1.7-3.3 5.2-5.6 9.3-5.6zm0 3.6c-1.9 0-3.6.6-5 1.6l-4.8-4.1c1.3-1.4 3.1-2.3 5-2.3z"/>
-              </svg>
               Sign In with Google
             </button>
           </div>
