@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  base: '/pattrentals/', // Replace with your repository name
+  base: '/patt-rentals/',
   optimizeDeps: {
     exclude: ['lucide-react'],
   },
