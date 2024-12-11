@@ -11,14 +11,9 @@ export default function Hero() {
         loop
         muted
         playsInline
-        preload="auto" // Efficient loading
-        poster="../images/placeholder.jpg" // Placeholder image before video loads
         className="absolute w-full h-full object-cover"
-      >
-        <source src={video} type="video/mp4" />
-        <source src="../images/vida.webm" type="video/webm" /> {/* Alternate format */}
-        Your browser does not support the video tag.
-      </video>
+        src={video} // Correctly use the imported video
+      />
 
       {/* Overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70" />
@@ -30,7 +25,7 @@ export default function Hero() {
           <img
             src={logo}
             alt="PattRentals Logo"
-            className="h-93 w-auto object-contain mx-auto"
+            className="h-93 w-auto object-contain mx-auto" // Increased height
           />
         </div>
 
