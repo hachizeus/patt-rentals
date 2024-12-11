@@ -1,4 +1,4 @@
-import video from "../images/pinterestdownloader.com-1733739063.315451.mp4";
+import video from "../images/vida.mp4";
 import logo from "../images/logo.png";
 import { ChevronRight } from "lucide-react";
 
