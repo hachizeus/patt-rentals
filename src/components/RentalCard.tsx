@@ -10,7 +10,13 @@ interface RentalCardProps {
   type: 'vehicle' | 'property';
 }
 
-export default function RentalCard({ id, images, title, description, price, }: RentalCardProps) {
+export default function RentalCard({
+  id,
+  images,
+  title,
+  description,
+  price,
+}: RentalCardProps) {
   const [currentImage, setCurrentImage] = useState(0);
 
   const nextImage = () => {
@@ -19,6 +25,14 @@ export default function RentalCard({ id, images, title, description, price, }: R
 
   const prevImage = () => {
     setCurrentImage((prev) => (prev - 1 + images.length) % images.length);
+  };
+
+  const handleBookNowClick = () => {
+    const message = `Hi, I'm interested in booking the ${title}. Here's the description: ${description}. The price is ${price}.`;
+    const whatsappNumber = '254720813111'; // Replace with dynamic number if needed
+    const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+    
+    window.open(whatsappLink, '_blank');
   };
 
   return (
@@ -65,7 +79,7 @@ export default function RentalCard({ id, images, title, description, price, }: R
         <div className="mt-4 flex items-center justify-between">
           <span className="text-red-600 font-semibold">{price}</span>
           <button
-            onClick={() => window.open('https://wa.me/254720813111', '_blank')}
+            onClick={handleBookNowClick}
             className="flex items-center gap-2 px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition-colors"
           >
             <Calendar className="w-4 h-4" />
