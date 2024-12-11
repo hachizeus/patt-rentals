@@ -10,7 +10,7 @@ interface RentalCardProps {
   type: 'vehicle' | 'property';
 }
 
-export default function RentalCard({ id, images, title, description, price, type }: RentalCardProps) {
+export default function RentalCard({ id, images, title, description, price, }: RentalCardProps) {
   const [currentImage, setCurrentImage] = useState(0);
 
   const nextImage = () => {
