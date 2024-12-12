@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
-import { createClient } from "@supabase/supabase-js";
-import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
-import RentalGrid from "./components/RentalGrid";
-import ContactSection from "./components/ContactSection";
-import Footer from "./components/Footer";
-import { vehicles, properties } from "./data/rentals";
+import { useEffect, useState } from 'react';
+import { createClient } from '@supabase/supabase-js';
+import Navbar from './components/Navbar';
+import Hero from './components/Hero';
+import RentalGrid from './components/RentalGrid';
+import ContactSection from './components/ContactSection';
+import Footer from './components/Footer';
+import { vehicles, properties } from './data/rentals';
 
 const supabase = createClient(
-  "https://faknelkaspuoidnqvqjz.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZha25lbGthc3B1b2lkbnF2cWp6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzM5MjMzMzcsImV4cCI6MjA0OTQ5OTMzN30.zDuroQ1Lg7h-v0-q5dqwkLHc-1jLjh2SVpNZgMaTA0k"
+  'https://faknelkaspuoidnqvqjz.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZha25lbGthc3B1b2lkbnF2cWp6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzM5MjMzMzcsImV4cCI6MjA0OTQ5OTMzN30.zDuroQ1Lg7h-v0-q5dqwkLHc-1jLjh2SVpNZgMaTA0k'
 );
 
 export default function App() {
@@ -20,23 +20,6 @@ export default function App() {
   const [phone, setPhone] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
-  // Function to log out after 24 hours
-  const logoutAfter24hrs = async () => {
-    const { data: { session } } = await supabase.auth.getSession();
-    if (session) {
-      const loginTime = new Date(session.expires_at * 1000); // session.expires_at is in Unix timestamp
-      const currentTime = new Date();
-
-      const timeDiff = currentTime - loginTime;
-      const twentyFourHoursInMillis = 24 * 60 * 60 * 1000;
-
-      if (timeDiff >= twentyFourHoursInMillis) {
-        await supabase.auth.signOut();
-        alert("Session expired. Please sign in again.");
-      }
-    }
-  };
 
   const handleSignIn = async () => {
     setLoading(true);
@@ -50,12 +33,11 @@ export default function App() {
 
       if (error) throw error;
 
+      // Save login timestamp to localStorage
+      const loginTime = new Date().getTime();
+      localStorage.setItem('loginTime', loginTime);
+
       setIsModalOpen(false);
-
-      // Set session expiration
-      const expiresAt = Date.now() + 24 * 60 * 60 * 1000; // 24 hours from now
-      localStorage.setItem('session_expiration', expiresAt);
-
     } catch (error) {
       setError(error.message);
     } finally {
@@ -75,12 +57,11 @@ export default function App() {
 
       if (error) throw error;
 
+      // Save signup timestamp to localStorage
+      const loginTime = new Date().getTime();
+      localStorage.setItem('loginTime', loginTime);
+
       setIsModalOpen(false);
-
-      // Set session expiration
-      const expiresAt = Date.now() + 24 * 60 * 60 * 1000; // 24 hours from now
-      localStorage.setItem('session_expiration', expiresAt);
-
     } catch (error) {
       setError(error.message);
     } finally {
@@ -89,18 +70,25 @@ export default function App() {
   };
 
   useEffect(() => {
-    // Check session expiration on app load
+    // Check if the user is logged in and if the session is still valid
     const checkSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
-      if (session) {
-        const expirationTime = localStorage.getItem('session_expiration');
-        const currentTime = Date.now();
-        if (currentTime >= expirationTime) {
-          await supabase.auth.signOut();
-          setIsModalOpen(true); // Prompt for login again
-        } else {
+      const lastLoginTime = localStorage.getItem('loginTime');
+      const currentTime = new Date().getTime();
+
+      if (session && lastLoginTime) {
+        const timeDifference = currentTime - lastLoginTime;
+        const twentyFourHoursInMilliseconds = 24 * 60 * 60 * 1000;
+
+        if (timeDifference < twentyFourHoursInMilliseconds) {
+          // Don't show the modal if the login is within 24 hours
           setIsModalOpen(false);
+        } else {
+          // Show the modal if more than 24 hours have passed
+          setIsModalOpen(true);
         }
+      } else {
+        setIsModalOpen(true);
       }
     };
 
@@ -111,9 +99,8 @@ export default function App() {
     <div className="min-h-screen bg-white relative">
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70">
-          <div
-            className={`p-6 rounded-md shadow-lg w-full max-w-sm transition-all duration-700 transform ${isSignIn ? 'bg-gradient-to-r from-black via-red-700 to-black' : 'bg-gradient-to-r from-red-700 via-white to-red-700'} border-2 border-red-500`}
-          >
+         <div className={`p-6 rounded-md shadow-lg w-full max-w-sm transition-all duration-700 transform ${isSignIn ? 'bg-gradient-to-r from-black via-red-700 to-black' : 'bg-gradient-to-r from-black via-red-700 to-black'} border-2 border-red-500`}>
+
             <h2 className="text-2xl font-bold mb-4 text-white">
               {isSignIn ? 'Sign In' : 'Sign Up'}
             </h2>
