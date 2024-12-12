@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react';
-import { createClient } from '@supabase/supabase-js';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import RentalGrid from './components/RentalGrid';
@@ -7,170 +5,22 @@ import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 import { vehicles, properties } from './data/rentals';
 
-const supabase = createClient(
-  'https://faknelkaspuoidnqvqjz.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZha25lbGthc3B1b2lkbnF2cWp6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzM5MjMzMzcsImV4cCI6MjA0OTQ5OTMzN30.zDuroQ1Lg7h-v0-q5dqwkLHc-1jLjh2SVpNZgMaTA0k'
-);
-
 export default function App() {
-  const [isModalOpen, setIsModalOpen] = useState(true);
-  const [isSignIn, setIsSignIn] = useState(true); // Toggle between Sign In and Sign Up
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [phone, setPhone] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  const handleSignIn = async () => {
-    setLoading(true);
-    setError(null);
-
-    try {
-      const { user, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-      if (error) throw error;
-
-      // Save login timestamp to localStorage
-      const loginTime = new Date().getTime();
-      localStorage.setItem('loginTime', loginTime);
-
-      setIsModalOpen(false);
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleSignUp = async () => {
-    setLoading(true);
-    setError(null);
-
-    try {
-      const { user, error } = await supabase.auth.signUp({
-        email,
-        password,
-      });
-
-      if (error) throw error;
-
-      // Save signup timestamp to localStorage
-      const loginTime = new Date().getTime();
-      localStorage.setItem('loginTime', loginTime);
-
-      setIsModalOpen(false);
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    // Check if the user is logged in and if the session is still valid
-    const checkSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      const lastLoginTime = localStorage.getItem('loginTime');
-      const currentTime = new Date().getTime();
-
-      if (session && lastLoginTime) {
-        const timeDifference = currentTime - lastLoginTime;
-        const twentyFourHoursInMilliseconds = 24 * 60 * 60 * 1000;
-
-        if (timeDifference < twentyFourHoursInMilliseconds) {
-          // Don't show the modal if the login is within 24 hours
-          setIsModalOpen(false);
-        } else {
-          // Show the modal if more than 24 hours have passed
-          setIsModalOpen(true);
-        }
-      } else {
-        setIsModalOpen(true);
-      }
-    };
-
-    checkSession();
-  }, []);
-
   return (
-    <div className="min-h-screen bg-white relative">
-      {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70">
-         <div className={`p-6 rounded-md shadow-lg w-full max-w-sm transition-all duration-700 transform ${isSignIn ? 'bg-gradient-to-r from-black via-red-700 to-black' : 'bg-gradient-to-r from-black via-red-700 to-black'} border-2 border-red-500`}>
-
-            <h2 className="text-2xl font-bold mb-4 text-white">
-              {isSignIn ? 'Sign In' : 'Sign Up'}
-            </h2>
-
-            {error && <p className="text-red-400 text-sm mb-4">{error}</p>}
-
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full mb-4 p-2 rounded-md bg-white text-black placeholder-gray-700 focus:outline-none"
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full mb-4 p-2 rounded-md bg-white text-black placeholder-gray-700 focus:outline-none"
-            />
-            {!isSignIn && (
-              <input
-                type="text"
-                placeholder="Phone Number (Optional)"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                className="w-full mb-4 p-2 rounded-md bg-white text-black placeholder-gray-700 focus:outline-none"
-              />
-            )}
-
-            <button
-              onClick={isSignIn ? handleSignIn : handleSignUp}
-              disabled={loading}
-              className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md w-full transition-colors duration-300"
-            >
-              {loading ? (isSignIn ? 'Signing In...' : 'Signing Up...') : (isSignIn ? 'Sign In' : 'Sign Up')}
-            </button>
-
-            <p className="text-sm text-center mt-4">
-              {isSignIn ? (
-                <span>
-                  Don’t have an account?{' '}
-                  <button
-                    onClick={() => setIsSignIn(false)}
-                    className="text-white underline focus:outline-none focus:text-red-500 transition-colors duration-300"
-                  >
-                    Sign Up
-                  </button>
-                </span>
-              ) : (
-                <span>
-                  Already have an account?{' '}
-                  <button
-                    onClick={() => setIsSignIn(true)}
-                    className="text-white underline focus:outline-none focus:text-red-500 transition-colors duration-300"
-                  >
-                    Sign In
-                  </button>
-                </span>
-              )}
-            </p>
-          </div>
-        </div>
-      )}
-
+    <div className="min-h-screen bg-white">
       <Navbar />
       <Hero />
       <div className="bg-gray-50">
-        <RentalGrid items={vehicles} title="Available Vehicles" type="vehicle" />
-        <RentalGrid items={properties} title="Featured Properties" type="property" />
+        <RentalGrid
+          items={vehicles}
+          title="Available Vehicles"
+          type="vehicle"
+        />
+        <RentalGrid
+          items={properties}
+          title="Featured Properties"
+          type="property"
+        />
       </div>
       <ContactSection />
       <Footer />
