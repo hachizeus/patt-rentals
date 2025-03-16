@@ -306,8 +306,8 @@ export const vehicles: RentalItem[] = [
   {
     id: "v25",
     images: [b],
-    title: "Mercez Benz",
-    description: "Executive Mercez Benz for business travel",
+    title: "Mercedes Benz",
+    description: "Executive Mercedes Benz for business travel",
     price: "ksh8,000/day",
     type: "vehicle",
     category: "economy",
