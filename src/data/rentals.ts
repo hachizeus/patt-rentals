@@ -128,7 +128,7 @@ export const vehicles: RentalItem[] = [
     location: "Nairobi",
   },
   {
-    id: "v5",
+    id: "v29",
     images: [mazdaa,mazdaa1],
     title: "mazda cx5",
     description: "Executive sedan for business travel",
@@ -172,7 +172,7 @@ export const vehicles: RentalItem[] = [
     location: "Nairobi",
   },
   {
-    id: "v13",
+    id: "v30",
     images: [a9],
     title: "Harrier",
     description: "Executive toyota for business travel",
@@ -262,7 +262,7 @@ export const vehicles: RentalItem[] = [
   {
     id: "v21",
     images: [f],
-    title: "Toyota Prado",
+    title: "Noah",
     description: "Executive toyota for business travel",
     price: "ksh22,000/day",
     type: "vehicle",
@@ -273,8 +273,8 @@ export const vehicles: RentalItem[] = [
   {
     id: "v22",
     images: [e,g],
-    title: "Toyota Prado",
-    description: "Executive toyota for business travel",
+    title: "Toyota",
+    description: "Executive Toyota for business travel",
     price: "ksh22,000/day",
     type: "vehicle",
     category: "economy",
@@ -284,8 +284,8 @@ export const vehicles: RentalItem[] = [
   {
     id: "v23",
     images: [d],
-    title: "Toyota Prado",
-    description: "Executive toyota for business travel",
+    title: "Nissan x-trail ",
+    description: "Executive nissan for business travel",
     price: "ksh22,000/day",
     type: "vehicle",
     category: "economy",
@@ -295,9 +295,9 @@ export const vehicles: RentalItem[] = [
   {
     id: "v24",
     images: [c],
-    title: "Toyota Prado",
-    description: "Executive toyota for business travel",
-    price: "ksh22,000/day",
+    title: "Nissan note",
+    description: "Executive Nissan note for business travel",
+    price: "ksh3,000/day",
     type: "vehicle",
     category: "economy",
     features: ["Massage seats", "Premium sound", "Driver assistance"],
@@ -306,9 +306,9 @@ export const vehicles: RentalItem[] = [
   {
     id: "v25",
     images: [b],
-    title: "Toyota Prado",
-    description: "Executive toyota for business travel",
-    price: "ksh22,000/day",
+    title: "Mercez Benz",
+    description: "Executive Mercez Benz for business travel",
+    price: "ksh8,000/day",
     type: "vehicle",
     category: "economy",
     features: ["Massage seats", "Premium sound", "Driver assistance"],
@@ -317,7 +317,7 @@ export const vehicles: RentalItem[] = [
   {
     id: "v26",
     images: [a],
-    title: "Toyota Prado",
+    title: "Prado",
     description: "Executive toyota for business travel",
     price: "ksh22,000/day",
     type: "vehicle",
